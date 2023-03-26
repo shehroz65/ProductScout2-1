@@ -1,4 +1,3 @@
-import pymongo
 import pickle
 from pymongo import MongoClient
 from flask_cors import CORS, cross_origin

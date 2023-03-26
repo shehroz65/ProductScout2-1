@@ -160,9 +160,10 @@ function App() {
           </div>
 
           <div className='queryresults'>
+            {query.length !== 0 ? <p className='queryitem'>Categoric Mapping: </p>: <div></div>}
             {query.map((item) => (
               <div>
-                <p> {item} </p>
+                <p className='queryitem'> {item} </p>
               </div> 
             ))}
           </div> 
