@@ -24,19 +24,56 @@ function App() {
     handleLoginClose();
   };
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      console.log('Enter key pressed');
+      handleclick();
+    }
+  };
 
-  const handleSearch = (event) => {
-    setSearchQuery(event.target.value);
-    // code to perform search
-    // code to perform search
-    // code to perform search
-    // code to perform search
-    // code to perform search
-    // code to perform search
-    // code to perform search
-    // code to perform search
-    // code to perform search
+  const [searchQuery, setSearchQuery] = useState('');
+  const [text, setText] = useState('');
+  const [query, setQuery] = useState([]);
+
+  const handleclick = () => {
+    var data = {
+      "name":text,
+    }
+    fetch('http://127.0.0.1:5000/search', {
+      method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+      },
+      body: JSON.stringify(data),
+      }).then((response) => {
+        response.json().then((body) => {
+            console.log(body)
+            setQuery(body["mapping"])
+            var boxes = document.getElementsByClassName(
+              'product-scout',
+            )
+            boxes[0].style.top = "20px";
+            boxes[0].style.left = "20px";
+            boxes[0].style.transform = "translate(0%, 0%)";
+            boxes[0].style["font-size"] = "20px";
+
+            var bar = document.getElementsByClassName(
+              'search-input',
+            )
+            bar[0].style.top = "50px";
+            bar[0].style.right = "130px";
+            bar[0].style.transform = "translate(0%, 0%)";
+
+            var search = document.getElementsByClassName(
+              'search-button',
+            )
+            search[0].style.top = "45px";
+            search[0].style.width = "100px";
+            search[0].style.height = "60px";
+            search[0].style.right = "25px";
+            search[0].style.transform = "translate(0%, 0%)";
+        });
+      });
   };
 
   return (
@@ -108,18 +145,27 @@ function App() {
         <div className="search-container">
           <input
             type="text"
-            value={searchQuery}
-            onChange={handleSearch}
+            value={text}
+            onChange={e => setText(e.target.value)}
+            onKeyPress={handleKeyPress}
             className="search-input"
           />
 
-          <button type="submit" className="search-button">
+          <button onClick={handleclick} className="search-button">
             Search
           </button>
 
           <div className="product-scout">
             <h1>ProductScout</h1>
           </div>
+
+          <div className='queryresults'>
+            {query.map((item) => (
+              <div>
+                <p> {item} </p>
+              </div> 
+            ))}
+          </div> 
         </div>
       )}
     </div>
