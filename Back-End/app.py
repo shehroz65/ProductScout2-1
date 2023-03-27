@@ -30,7 +30,7 @@ with open(r'categories.pkl', 'rb') as f:
 with open(r'category_embeddings.pkl', 'rb') as f:
     category_query_embeddings = pickle.load(f)
 
-model = SentenceTransformer('sentence-transformers/all-MiniLM-L12-v1')
+model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
 
 app = Flask(__name__)
 cors = CORS(app)
